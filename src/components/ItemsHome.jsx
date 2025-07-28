@@ -3,7 +3,7 @@ import { itemsHomeStyles } from '../assets/dummyStyles';
 import BannerHome from './BannerHome';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../CartContext';
-import { FaMinus, FaShoppingCart, FaThList, FaPlus } from 'react-icons/fa';
+import { FaMinus, FaShoppingCart, FaThList, FaPlus, FaChevronRight } from 'react-icons/fa';
 import { categories, products } from '../assets/dummyData';
 
 const ItemsHome = () => {
@@ -47,6 +47,10 @@ const ItemsHome = () => {
       ? updateQuantity(product.id, qty - 1)
       : removeFromCart(product.id);
   };
+
+  const redirectToItemsPage = () => {
+    navigate('/items',{state: {category: activeCategory}})
+  }
 
   const handleSearch = term => setSearchTerm(term);
 
@@ -197,9 +201,27 @@ const ItemsHome = () => {
                 <div className={itemsHomeStyles.noProductsText}>
                   Duz girde Xiyar
                 </div>
+
+                <button onClick={() => setSearchTerm('')}
+                  className={itemsHomeStyles.clearSearchButton}>
+                    Clear Search
+                  </button>
               </div>
             )}
+
           </div>
+          {/* VIEW ALL BUTTONs*/}
+          {!searchTerm &&(
+            <div className=' text-center'>
+              <button onClick={redirectToItemsPage}
+              className={itemsHomeStyles.viewAllButton}>
+                View all {activeCategory === 'All' ? 'Products' : activeCategory}
+                <FaChevronRight className=' ml-3'/>
+              </button>
+            </div>
+          )}
+
+
         </main>
       </div>
     </div>
